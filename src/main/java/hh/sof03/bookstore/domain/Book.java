@@ -30,6 +30,10 @@ public class Book {
         this.price = price;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -48,6 +52,10 @@ public class Book {
 
     public int getYear() {
         return year;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
     
     public void setAuthor(String author) {
