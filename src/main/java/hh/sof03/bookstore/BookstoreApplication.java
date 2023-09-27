@@ -33,13 +33,4 @@ public class BookstoreApplication {
 		};
 	}
 
-	// @Bean
-	// public CommandLineRunner categoryDemo(CategoryRepository categoryRepo) {
-	// 	return (args) -> {
-	// 		categoryRepo.save(new Category("Sci-fi"));
-	// 		categoryRepo.save(new Category("Fantasy"));
-	// 		log.info("succesful");
-	// 	};
-	// }
-
 }
