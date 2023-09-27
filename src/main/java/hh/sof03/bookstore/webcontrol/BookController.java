@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import hh.sof03.bookstore.domain.Book;
 import hh.sof03.bookstore.domain.BookRepository;
+import hh.sof03.bookstore.domain.CategoryRepository;
 
 
 
@@ -17,6 +18,8 @@ public class BookController {
 
     @Autowired
     private BookRepository bookRep;
+    @Autowired
+    private CategoryRepository categoryRep;
 
     @GetMapping("/index")
     public String frontPage() {
@@ -40,6 +43,7 @@ public class BookController {
     @GetMapping("/add")
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", categoryRep.findAll());
         return "addbook";
     }
 
@@ -52,6 +56,7 @@ public class BookController {
     @GetMapping("/edit/{id}")
     public String editBook(@PathVariable("id") Long bookId, Model model) {
         model.addAttribute("book", bookRep.findById(bookId));
+        model.addAttribute("categories", categoryRep.findAll());
         return "editbook";
     }
 
