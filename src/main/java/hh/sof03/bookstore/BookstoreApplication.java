@@ -24,11 +24,11 @@ public class BookstoreApplication {
 	@Bean
 	public CommandLineRunner bookDemo(BookRepository bookRepo, CategoryRepository categoryRepo) {
 		return (args) -> {
-			bookRepo.save(new Book("The Lord of the Rings", "J.R.R. Tolkien", 1955, "9780618640157", 24.0));
-			bookRepo.save(new Book("The Hobbit", "J.R.R. Tolkien", 1937, "9780547928241", 19.8));
-			
 			categoryRepo.save(new Category("Sci-fi"));
 			categoryRepo.save(new Category("Fantasy"));
+
+			bookRepo.save(new Book("The Lord of the Rings", "J.R.R. Tolkien", 1955, "9780618640157", 24.0, categoryRepo.findByName("Fantasy")));
+			bookRepo.save(new Book("The Hobbit", "J.R.R. Tolkien", 1937, "9780547928241", 19.8, categoryRepo.findByName("Fantasy")));
 			log.info("succesful");
 		};
 	}
