@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-    <!-- xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"> -->
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <title>Booklist</title>
@@ -30,8 +30,8 @@
                     <th>ISBN</th>
                     <th>Year</th>
                     <th>Category</th>
-                    <th></th>
-                    <th></th>
+                    <th sec:authorize="hasRole('ADMIN')"></th>
+                    <th sec:authorize="hasRole('ADMIN')"></th>
                 </tr>
                 <tr th:each="book : ${books}">
                     <td th:text="${book.author}"></td>
@@ -39,8 +39,10 @@
                     <td th:text="${book.isbn}"></td>
                     <td th:text="${book.year}"></td>
                     <td th:text="${book.category != null ? book.category.name : ''}"></td>
-                    <td><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
-                    <td><a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary">Edit</a></td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary">Edit</a></td>
                 </tr>
             </tbody>
         </table>

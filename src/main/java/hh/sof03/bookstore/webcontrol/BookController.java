@@ -1,6 +1,7 @@
 package hh.sof03.bookstore.webcontrol;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import hh.sof03.bookstore.domain.Book;
 import hh.sof03.bookstore.domain.BookRepository;
 import hh.sof03.bookstore.domain.CategoryRepository;
-
-
 
 @Controller
 public class BookController {
@@ -26,18 +25,10 @@ public class BookController {
         return "frontpage";
     }
 
-
     @GetMapping("/booklist")
     public String bookList(Model model) {
         model.addAttribute("books", bookRep.findAll());
         return "booklist";
-    }
-
-
-    @GetMapping("/delete/{id}")
-    public String deleteBook(@PathVariable("id") Long bookId, Model model) {
-        bookRep.deleteById(bookId);
-        return "redirect:../booklist";
     }
 
     @GetMapping("/add")
@@ -53,7 +44,16 @@ public class BookController {
         return "redirect:/booklist";
     }
 
+
+    @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteBook(@PathVariable("id") Long bookId, Model model) {
+        bookRep.deleteById(bookId);
+        return "redirect:../booklist";
+    }
+
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String editBook(@PathVariable("id") Long bookId, Model model) {
         model.addAttribute("book", bookRep.findById(bookId));
         model.addAttribute("categories", categoryRep.findAll());
